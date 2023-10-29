@@ -48,3 +48,44 @@ def wishme():
         speak("Good Evening !")
 
     speak("Hello I am alex  , How may i help you")
+
+
+def alex():
+    frequency = 2500  # Set Frequency To 2500 Hertz
+    duration = 500  # Set Duration To 1000 ms == 1 second
+    winsound.Beep(frequency, duration)
+    wishme()
+
+
+def takecommand():
+   
+    r = sr.Recognizer()
+
+
+    try:
+        with sr.Microphone() as source:
+            print("Listening ...")
+            r.pause_threshold = 1  # 1 sec break will not complete the sentence
+            r.energy_threshold = 800  # energy threshold for backround noise
+            audio = r.listen(source)
+
+            try:
+                print("Recognizing ...")
+                query = r.recognize_google(audio, language='en-in')
+                print(f"User said : {query}\n")
+
+            except Exception as e:
+                # print("e")
+                print("Say that again please")
+                return "None"
+            return query
+    except Exception as e:
+        print("Didn't found Micro Phone")
+        
+    
+if __name__ == "__main__":
+    
+    alex()
+
+    while True:
+                query = takecommand().lower()
