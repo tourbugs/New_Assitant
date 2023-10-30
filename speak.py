@@ -89,3 +89,25 @@ if __name__ == "__main__":
 
     while True:
                 query = takecommand().lower()
+
+                if 'wikipedia' in query :
+                    speak('Searching Wikipedia ... ')
+                    query = query.replace("who is", "").replace("what is","").replace("tell me","")
+                    try:
+                        results = wikipedia.summary(query, sentences=2)
+                        speak("According to wikipedia")
+        
+                    except Exception as e:
+                        speak("No result found!")
+                        print("No result Found!")
+                    print(results)
+                    speak(results)
+
+                elif 'alex' in query:
+                    sys.exit()
+
+                elif 'open youtube' in query:
+                    webbrowser.open("youtube.com")
+
+                elif 'open google' in query:
+                    webbrowser.open("google.com")
