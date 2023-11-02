@@ -144,6 +144,40 @@ if __name__ == "__main__":
 
     # SHUT DOWN
                 elif 'shut down' in query  or 'shutdown' in query: 
-                        shutdown()
+                    shutdown()
+                elif "what is the temperature" in query or "today's weather" in query or "today's temperature" in query:
+                    Temp()
+
+
+            elif "alarm" in query:
+                speak("Enter The Time !:")
+                try:
+                    time = input("Enter the time !(THROUGH KEYBOARD)(hh:mm:ss)(24 HOUR FORMAT)")
+
+                except Exception as e:
+                    print("Your Input is in IMPROPER FORMAT")
+
+
+                time = seconds(time)
+                time_ac=datetime.datetime.now().time()
+                current_time = time_ac.strftime("%H:%M:%S")
+                current_time = seconds(current_time)
+                ti = time-current_time
+                zehar = threading.Timer(ti , alarm)
+                ok()
+                zehar.start()
+
+
+
+
+            elif "what is " in query or "who is" in query or  "what's" in query or "tell me" in query:
+                try :
+                    pywhatkit.info(query.replace("tell me",""), lines = 2)
+
+                except Exception as a:
+                    print("Didn't get it")
+
+
+                speak("here is what i found")
             
 
