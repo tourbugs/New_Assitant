@@ -32,6 +32,10 @@ def speak(audio):
 
     engine.say(audio)
     engine.runAndWait()
+# SHUTDOWN
+def shutdown():
+    speak("shutting down")
+    sys.exit()
 
 
 
@@ -111,3 +115,35 @@ if __name__ == "__main__":
 
                 elif 'open google' in query:
                     webbrowser.open("google.com")
+                elif ' the time' in query:
+                   Time = datetime.datetime.now().strftime("%I:%M %p")
+                   print(Time)
+                   speak("The time is" + Time)
+
+                 elif 'on youtube' in query:
+                       playcom = query.replace("play", "")
+                       speak(playcom)
+                       print(playcom)
+                       pywhatkit.playonyt(playcom)
+
+     #For Jokes
+                elif 'joke' in query:
+                     speak(pyjokes.get_joke())
+
+
+    # SEARCH
+                elif 'search' in query:
+                      find = query.replace("search", "")
+                      print(find)
+                      pywhatkit.search(str(find))
+
+                elif 'google' in query:
+                    find = query.replace("google", "")
+                    print(find)
+                    pywhatkit.search(str(find))
+
+    # SHUT DOWN
+                elif 'shut down' in query  or 'shutdown' in query: 
+                        shutdown()
+            
+
