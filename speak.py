@@ -54,7 +54,7 @@ def wishme():
     speak("Hello I am alex  , How may i help you")
 
 
-def alex():
+def alexa():
     frequency = 2500  # Set Frequency To 2500 Hertz
     duration = 500  # Set Duration To 1000 ms == 1 second
     winsound.Beep(frequency, duration)
@@ -86,10 +86,53 @@ def takecommand():
     except Exception as e:
         print("Didn't found Micro Phone")
         
+# OK GOT IT
+def ok():
+    speak("ok got it!")
+
+
+def dk():
+    speak("I don't understand what you said")
+
+q2="hello" #global variable
+
+def Temp():
+    search ="today's weather"
+    url = f"https://www.google.com/search?q={search}"
+    r = requests.get(url)
+    data = BeautifulSoup(r.text,"html.parser")
+    temperature = data.find("div",class_= "BNeawe").text
+    print(temperature)
+    speak(f"the tamperature is {temperature},Celsius")
+
+#TIME TO SECONDS
+def seconds(time):
+    multi = 1
+    nu = 0
+    print(type(time))
+    for word in time.split():
+        if word.isdigit():
+            num = word
+            nu = nu + (int(word) * 3600) / multi
+            multi = multi * 60
+    return int(nu)
+
+def alarm():
+
+    speak("alarm set")
+    frequency = 2500  # Set Frequency To 2500 Hertz
+    duration = 500  # Set Duration To 1000 ms == 1 second
+    while True:
+        winsound.Beep(frequency, duration)
+
+        if "ok got it" in query:
+            break
+
+    speak("ALARM CLOSED!")
     
 if __name__ == "__main__":
     
-    alex()
+    alexa()
 
     while True:
                 query = takecommand().lower()
@@ -144,6 +187,39 @@ if __name__ == "__main__":
 
     # SHUT DOWN
                 elif 'shut down' in query  or 'shutdown' in query: 
-                        shutdown()
-            
+                    shutdown()
+                elif "what is the temperature" in query or "today's weather" in query or "today's temperature" in query:
+                    Temp()
+
+
+            elif "alarm" in query:
+                speak("Enter The Time !:")
+                try:
+                    time = input("Enter the time !(THROUGH KEYBOARD)(hh:mm:ss)(24 HOUR FORMAT)")
+
+                except Exception as e:
+                    print("Your Input is in IMPROPER FORMAT")
+
+
+                time = seconds(time)
+                time_ac=datetime.datetime.now().time()
+                current_time = time_ac.strftime("%H:%M:%S")
+                current_time = seconds(current_time)
+                ti = time-current_time
+                zehar = threading.Timer(ti , alarm)
+                ok()
+                zehar.start()
+
+
+
+
+            elif "what is " in query or "who is" in query or  "what's" in query or "tell me" in query:
+                try :
+                    pywhatkit.info(query.replace("tell me",""), lines = 2)
+
+                except Exception as a:
+                    print("Didn't get it")
+
+
+                speak("here is what i found")
 
